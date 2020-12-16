@@ -35,3 +35,7 @@ dashboard/img
 /dashboard/data/img/262144px_orig/9/
 /dashboard/data/img/262144px_orig/10/
 /dashboard/data/csv/spots_all.xlsx
+/dashboard/data/csv/archive/cellCoords_0.tsv
+/dashboard/data/csv/archive/cellData_0.tsv
+/dashboard/data/csv/archive/geneData_0.tsv
+/dashboard/data/segmentation.csv
