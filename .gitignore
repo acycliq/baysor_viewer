@@ -1,0 +1,37 @@
+venv/
+.vscode/
+.idea/
+__pycache__/
+source/__pycache__/
+.xml
+
+# hide the user name/passwd from tracking
+credentials.py
+
+# hide notebook checkpoints
+.ipynb_checkpoints
+
+# exclude pyramid of the png tiles used by the viewer
+dashboard/data/mouse/img/default_98genes/16384px/
+dashboard/data/mouse/img/default/32768px/
+
+
+*.gz
+gsf-save*.*
+*.7z
+*.png
+*.tif
+*.tiff
+dashboard/img
+
+/dashboard/data/img/262144px/9/
+/dashboard/data/img/262144px/10/
+/dashboard/data/tsv/cellCoords/cellCoords_0_ORIG.tsv
+/dashboard/data/csv/cellCoords_0.tsv
+/dashboard/data/csv/cellData_0.tsv
+/dashboard/data/csv/geneData_0.tsv
+/dashboard/data/img/262144px_anchor/9/
+/dashboard/data/img/262144px_anchor/10/
+/dashboard/data/img/262144px_orig/9/
+/dashboard/data/img/262144px_orig/10/
+/dashboard/data/csv/spots_all.xlsx
