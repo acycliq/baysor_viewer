@@ -3,7 +3,7 @@ function dapi(cfg) {
 
     var img = cfg.imageSize,
         anchor_tiles = cfg.anchor_tiles,
-        orig_tiles = cfg.orig_tiles,
+        flipped_tiles = cfg.flipped_tiles,
         roi = cfg.roi;
     // var img = [227951, 262144],
     //     roi = {"x0": 0, "x1": 40000, "y0": 0, "y1": 46000};
@@ -23,7 +23,7 @@ function dapi(cfg) {
 
 
     var anchorMap = L.tileLayer(anchor_tiles, {minZoom: 0, maxZoom: 8});
-    var origMap = L.tileLayer(orig_tiles, {minZoom: 0, maxZoom: 8});
+    var flippedMap = L.tileLayer(flipped_tiles, {minZoom: 0, maxZoom: 8});
 
     map = L.map('mymap', {
         layers: [anchorMap],
@@ -32,7 +32,7 @@ function dapi(cfg) {
     }).setView([img[1], img[0] / 2], 2);
 
     var baseLayers = {
-        "Original image": origMap,
+        "Flipped image": flippedMap,
         "Anchor image": anchorMap,
     };
 
