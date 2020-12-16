@@ -1,8 +1,9 @@
 function config() {
     return {
-            roi: {"x0": 0, "x1": 7602, "y0": 0, "y1": 5471 },
+            roi: {"x0": 0, "x1": 9496, "y0": 0, "y1": 7674},
             imageSize: [262144, 188660],
-            tiles: 'dashboard/data/img/262144px_anchor/{z}/{y}/{x}.jpg',
+            anchor_tiles: 'dashboard/data/img/262144px_anchor/{z}/{y}/{x}.jpg',
+            orig_tiles: 'dashboard/data/img/262144px_original/{z}/{y}/{x}.jpg',
             cellData: 'https://api.github.com/repos/acycliq/baysor_viewer/contents/dashboard/data/tsv/cellData',
             geneData: 'https://api.github.com/repos/acycliq/baysor_viewer/contents/dashboard/data/tsv/geneData',
             cellCoords: 'https://api.github.com/repos/acycliq/baysor_viewer/contents/dashboard/data/tsv/cellCoords',

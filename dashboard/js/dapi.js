@@ -2,7 +2,8 @@ function dapi(cfg) {
     console.log('Doing Dapi plot');
 
     var img = cfg.imageSize,
-        tiles = cfg.tiles,
+        anchor_tiles = cfg.anchor_tiles,
+        orig_tiles = cfg.orig_tiles,
         roi = cfg.roi;
     // var img = [227951, 262144],
     //     roi = {"x0": 0, "x1": 40000, "y0": 0, "y1": 46000};
@@ -21,14 +22,22 @@ function dapi(cfg) {
     });
 
 
+    var anchorMap = L.tileLayer(anchor_tiles, {minZoom: 0, maxZoom: 8});
+    var origMap = L.tileLayer(orig_tiles, {minZoom: 0, maxZoom: 8});
+
     map = L.map('mymap', {
+        layers: [anchorMap],
         crs: L.CRS.MySimple,
         attributionControl: false,
     }).setView([img[1], img[0] / 2], 2);
-    L.tileLayer(tiles, {
-        minZoom: 0,
-        maxZoom: 8
-    }).addTo(map);
+
+    var baseLayers = {
+        "Original image": origMap,
+        "Anchor image": anchorMap,
+    };
+
+    L.control.layers(baseLayers, {},  { collapsed: false } ).addTo(map);
+
 
     function getTaxonomy(gene) {
         if (glyphMap.get(gene)) {
