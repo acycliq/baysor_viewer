@@ -23,7 +23,7 @@ function dapi(cfg) {
 
 
     var anchorMap = L.tileLayer(anchor_tiles, {minZoom: 0, maxZoom: 8});
-    var flippedMap = L.tileLayer(flipped_tiles, {minZoom: 0, maxZoom: 8});
+    // var flippedMap = L.tileLayer(flipped_tiles, {minZoom: 0, maxZoom: 8});
 
     map = L.map('mymap', {
         layers: [anchorMap],
@@ -32,11 +32,11 @@ function dapi(cfg) {
     }).setView([img[1], img[0] / 2], 2);
 
     var baseLayers = {
-        "Flipped image": flippedMap,
+        // "Flipped image": flippedMap,
         "Anchor image": anchorMap,
     };
 
-    L.control.layers(baseLayers, {},  { collapsed: false } ).addTo(map);
+    // L.control.layers(baseLayers, {},  { collapsed: false } ).addTo(map);
 
 
     function getTaxonomy(gene) {
