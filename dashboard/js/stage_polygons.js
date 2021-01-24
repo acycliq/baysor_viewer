@@ -23,6 +23,38 @@ function drawPoly(color, alpha, project, mycontainer) {
     };
 }
 
+function concatGeoJSON(g){
+    var feat = [];
+    g.forEach((d, i) => {
+        feat = [...feat, ...d.features]
+    });
+    return {
+        "type" : "FeatureCollection",
+        "features": feat
+    }
+}
+
+function string2hex(string) {
+    if (typeof string === 'string' && string[0] === '#') {
+        string = string.substr(1);
+    }
+    return parseInt(string, 16);
+}
+
+function getColor(id){
+    // id==='dimitris'? hexStr='#0000ff': hexStr='#ffff00'
+    var colour_id = config().seg_names.indexOf(id);
+    var hexStr = config().seg_colours[colour_id];
+    // var hex_arr = labelMap.filter(d => d.name === id)[0].color;
+    // hexStr = hex_arr[Math.floor(Math.random() * hex_arr.length)];
+    return string2hex(hexStr)
+}
+
+function getAlpha(id){
+    return id === 'dimitris'? 0.5: 0.5
+}
+
+
 function drawCellOutline(color, alpha, project, container, coords) {
     // Draws the outlines/boundaries of the cell, but I dont think I am going to be using it, there is no need
     container.lineStyle(2, color, 1);
@@ -34,8 +66,11 @@ function drawCellOutline(color, alpha, project, container, coords) {
 }
 
 function drawCellPolygons() {
-    cellPolygons = myUtils().poly_collection(cellBoundaries, dapiConfig.t);
-    cellBoundaries = null;
+    var ids = config().seg_names;
+    var poly_arr = _cellBoundaries_arr.map((d, i) => poly_collection(d, dapiConfig.t, ids[i]));
+    var cellPolygons = concatGeoJSON(poly_arr);
+
+    // cellPolygons = myUtils().poly_collection(poly_boundaries, dapiConfig.t);
     masterCellContainer = new PIXI.Graphics(); // Assign this to the global variable 'masterCellContainer'
     var doubleBuffering = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
@@ -93,13 +128,13 @@ function renderPolygons(data) {
 
             // var markerCoords = project(markerLatLng)
             data.features.forEach(function (feature, index) {
-                var color = myUtils().string2hex(feature.properties.agg.color),
-                    alpha = 0.8;
+                var color = getColor(feature.properties.id),
+                    alpha = getAlpha(feature.properties.id);
                 if (feature.geometry === null) return;
                 bounds = L.bounds(feature.geometry.coordinates[0]);
                 if (feature.geometry.type === 'Polygon') {
                     // 1. find the shortname of the most probable cell-type for this particular cell
-                    var cName = feature.properties.topClass;
+                    var cName = feature.properties.id;
 
                     // 2. grab the relevant pixiGraphics object
                     var cont = cellContainer_array.filter(d => d.name === cName)[0];
@@ -107,6 +142,7 @@ function renderPolygons(data) {
                     // 3, now that you have the correct pixiGraphics object, draw the polygon.
                     // In this manner each pixiGraphics object will hold polygons that have the same shortname
                     if (cName !== "Zero"){
+                        console.log(feature.geometry.coordinates)
                         drawPoly(color, alpha, project, cont)(feature.geometry.coordinates);
                     }
                     // drawCellOutline(color, alpha, project, cont, feature.geometry.coordinates);

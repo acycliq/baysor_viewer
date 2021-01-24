@@ -471,7 +471,7 @@ function dapiChart(config) {
     $('#hideDapiAndPanels').show();
     console.log('check boxes added');
 
-    cellClasses = [...new Set(cellData.map(d => d.topClass))].sort();
+    cellClasses = config.seg_names;
     cellClasses.forEach((d, i) => {
         // make some pixiGraphics (aka containers) objects to hold the cell polygons and name them based on their short names
         // these are just empty right now, they only have a name
