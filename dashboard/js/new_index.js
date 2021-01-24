@@ -5,6 +5,7 @@
 
 // Variables in the global scope
 var cellBoundaries,
+    _cellBoundaries_arr = [],
     cellData,
     all_geneData,
     spotsIndex, //spatial index
@@ -21,6 +22,7 @@ var cellBoundaries,
     myDots,
     cellWatch, //keeps the id of the cell currently drawn on the map
     map,
+    cellPolyLayer_arr = [],  // keeps the segmentations
     cellContainer_array = [],
     masterCellContainer,
     masterCellRenderer,
@@ -128,13 +130,11 @@ function run() {
     // var celljson = configSettings.cellData; // is this still needed? I dont think so...
 
     var q = d3.queue();
-    q = q.defer(d3.json, configSettings.cellBoundaries);
     q = q.defer(d3.json, configSettings.cellData);
     q = q.defer(d3.json, configSettings.geneData);
-    // for (var i = 0; i < configSettings.num_jsons; i++) {
-    //     q = q.defer(d3.json, configSettings.spot_json(i));
-    //     q = q.defer(d3.json, configSettings.cell_json(i));
-    // }
+    for (var i = 0; i < configSettings.seg_names.length; i++) {
+        q = q.defer(d3.json, configSettings.cellBoundaries(i));
+    }
     q.await(onCellsLoaded(configSettings));
 
 }
@@ -152,7 +152,7 @@ function onCellsLoaded(cfg) {
         //         i % 2 === 0 ? data_3 = [...data_3, ...d] : // even positions in the args array hold the cell data
         //             all_geneData = [...all_geneData, ...d] // odd positions in the args array hold the gene data
         // });
-        all_geneData = args[2];
+        all_geneData = args[1];
         [cellBoundaries, cellData] = postLoad(args);
         console.log('loading data finished');
         console.log('num of genes loaded: ' + all_geneData.length);
@@ -170,25 +170,25 @@ function onCellsLoaded(cfg) {
 
 function postLoad(arr) {
     //Do some basic post-processing/cleaning
-    var _cellBoundaries = arr[0];
-    // _cellBoundaries.forEach(function (row, index, arr) {
-    //     arr[index].coords = JSON.parse(arr[index].coords);
+    // var _cellBoundaries = arr[0];
+    // // _cellBoundaries.forEach(function (row, index, arr) {
+    // //     arr[index].coords = JSON.parse(arr[index].coords);
+    // // });
+    //
+    // //for some reason which I havent investigated, some cells do not have boundaries. Remove those cells
+    // var null_coords = _cellBoundaries.filter(d => {
+    //     return d.coords === null
     // });
-
-    //for some reason which I havent investigated, some cells do not have boundaries. Remove those cells
-    var null_coords = _cellBoundaries.filter(d => {
-        return d.coords === null
-    });
-    if (null_coords) {
-        null_coords.forEach(d => {
-            console.log('Cell_id: ' + d.cell_id + ' doesnt have boundaries')
-        })
-    }
+    // if (null_coords) {
+    //     null_coords.forEach(d => {
+    //         console.log('Cell_id: ' + d.cell_id + ' doesnt have boundaries')
+    //     })
+    // }
 
     // If you need to remove the cells with no boundaries uncomment the line below:
     // _cellBoundaries = _cellBoundaries.filter(d => { return d.coords != null });
 
-    var _cellData = arr[1];
+    var _cellData = arr[0];
 
     //stick the aggregated metrics
     var agg = aggregate(_cellData);
@@ -197,14 +197,23 @@ function postLoad(arr) {
         d.agg = agg[i];
     });
 
-    var _geneData = arr[2];
+    // var _geneData = arr[1];
+
+    // cell boundaries are all after position 2
+    for (var i = 0; i < configSettings.seg_names.length; i++){
+        _cellBoundaries_arr[i] = arr[2 + i]
+    }
 
     // make sure the arrays are sorted by Cell_Num
     _cellData = _cellData.sort(function(a,b){return a.Cell_Num-b.Cell_Num});
-    _cellBoundaries = _cellBoundaries.sort(function(a,b){return a.Cell_Num-b.Cell_Num});
+    _cellBoundaries_arr = _cellBoundaries_arr.map(d => d.sort(function(a,b){return a.Cell_Num-b.Cell_Num}));
+    // _cellBoundaries = _cellBoundaries.sort(function(a,b){return a.Cell_Num-b.Cell_Num});
 
-    return [_cellBoundaries, _cellData, _geneData]
+    return [_cellBoundaries_arr[1], _cellData]
 }
+
+
+
 
 function maxIndex(data){
     //returns the index of the max of the input array.

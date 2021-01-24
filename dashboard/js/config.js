@@ -5,7 +5,7 @@ function config() {
             anchor_tiles: 'dashboard/data/img/262144px_anchor/{z}/{y}/{x}.jpg',
             cellData: './dashboard/data/tsv/cellData/cellData.json',
             geneData: './dashboard/data/tsv/geneData/geneData.json',
-            cellBoundaries: './dashboard/data/tsv/cellCoords/cellCoords.json',
-            class_name_separator: '.' //The delimiter in the class name string, eg if name is Astro.1, then use the dot as a separator, if Astro1 then use an empty string. It is used in a menu/control to show the class names nested under its broader name
-        }
+            cellBoundaries: i => 'http://localhost:63342/baysor_viewer/dashboard/data/tsv/cellCoords/cellCoords_' + i + '.json',
+            seg_names: ['Baysor_1', 'Baysor_2'],
+    }
 }
