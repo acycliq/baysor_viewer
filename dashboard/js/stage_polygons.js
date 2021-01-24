@@ -142,7 +142,6 @@ function renderPolygons(data) {
                     // 3, now that you have the correct pixiGraphics object, draw the polygon.
                     // In this manner each pixiGraphics object will hold polygons that have the same shortname
                     if (cName !== "Zero"){
-                        console.log(feature.geometry.coordinates)
                         drawPoly(color, alpha, project, cont)(feature.geometry.coordinates);
                     }
                     // drawCellOutline(color, alpha, project, cont, feature.geometry.coordinates);

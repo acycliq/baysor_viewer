@@ -188,6 +188,7 @@ function postLoad(arr) {
     // If you need to remove the cells with no boundaries uncomment the line below:
     // _cellBoundaries = _cellBoundaries.filter(d => { return d.coords != null });
 
+
     var _cellData = arr[0];
 
     //stick the aggregated metrics
@@ -203,6 +204,19 @@ function postLoad(arr) {
     for (var i = 0; i < configSettings.seg_names.length; i++){
         _cellBoundaries_arr[i] = arr[2 + i]
     }
+
+    var temp = [];
+    for (var k=0; k <_cellBoundaries_arr.length; ++k) {
+        var temp_obj = [];
+        for (var i = 0; i < _cellBoundaries_arr[k].length; ++i) {
+            temp_obj.push({'cell_id': i, 'label': i+1, 'coords': _cellBoundaries_arr[k][i][0]});
+        }
+        temp.push(temp_obj)
+    }
+
+    // ok, ugly but i leave it..
+    // overwrite _cellBoundaries_arr with temp
+    _cellBoundaries_arr = temp;
 
     // make sure the arrays are sorted by Cell_Num
     _cellData = _cellData.sort(function(a,b){return a.Cell_Num-b.Cell_Num});
