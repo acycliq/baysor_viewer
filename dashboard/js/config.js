@@ -5,7 +5,7 @@ function config() {
             anchor_tiles: 'dashboard/data/img/262144px_anchor/{z}/{y}/{x}.jpg',
             cellData: './dashboard/data/tsv/cellData/cellData.json',
             geneData: './dashboard/data/tsv/geneData/geneData.json',
-            cellBoundaries: i => 'http://localhost:63342/baysor_viewer/dashboard/data/tsv/cellCoords/cellCoords_' + i + '.json',
+            cellBoundaries: i => 'http://localhost:63342/baysor_viewer/dashboard/data/json/cellCoords/cellCoords_' + i + '.json',
             seg_names: ['Baysor_1', 'Baysor_2', 'Baysor_3'],
             seg_colours: ['#009688', '#2944cc', '#ff0101']
     }
