@@ -3,9 +3,9 @@ function config() {
         roi: {"x0": 0, "x1": 9849, "y0": 0, "y1": 9875},
         imageSize: [261454, 262144],
         anchor_tiles: 'dashboard/data/img/262144px/{z}/{y}/{x}.jpg',
-        cellData: './dashboard/data/json/cellData/cellData.json',
-        geneData: './dashboard/data/json/geneData/geneData.json',
-        cellBoundaries: i => './dashboard/data/json/polys/poly_' + i + '.json',
+        cellData: './dashboard/data/TO105_20102020/cellData/cellData.json',
+        geneData: './dashboard/data/TO105_20102020/geneData/geneData.json',
+        cellBoundaries: i => './dashboard/data/TO105_20102020/polys/poly_' + i + '.json',
         seg_names: ['Baysor_1'],
         seg_colours: ['#009688']
     }
@@ -24,3 +24,4 @@ function config() {
 //    poly.json in the folder then you will have to add its name in the 'seg_names' array
 //*******************************
 
+// dashboard/data/TO105_20102020/cellData/cellData.json
