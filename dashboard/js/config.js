@@ -1,13 +1,13 @@
 function config() {
     return {
-        roi: {"x0": 0, "x1": 9496, "y0": 0, "y1": 7674},
-        imageSize: [262144, 211846],
-        anchor_tiles: 'dashboard/data/img/262144px_anchor/{z}/{y}/{x}.jpg',
+        roi: {"x0": 0, "x1": 9849, "y0": 0, "y1": 9875},
+        imageSize: [261454, 262144],
+        anchor_tiles: 'dashboard/data/img/262144px/{z}/{y}/{x}.jpg',
         cellData: './dashboard/data/json/cellData/cellData.json',
         geneData: './dashboard/data/json/geneData/geneData.json',
         cellBoundaries: i => './dashboard/data/json/polys/poly_' + i + '.json',
-        seg_names: ['Baysor_1', 'Some Baysor', 'Baysor-3', 'AnoherBaysor 4'],
-        seg_colours: ['#009688', '#2944cc', '#ff0101', '#ffc500']
+        seg_names: ['Baysor_1'],
+        seg_colours: ['#009688']
     }
 }
 
